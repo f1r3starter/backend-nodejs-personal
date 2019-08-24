@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import v4 from 'uuid/v4';
 
 const baseOptions = {
-    discriminatorKey: 'role',
+    discriminatorKey: 'type',
     collection:       'users',
 };
 

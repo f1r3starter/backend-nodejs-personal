@@ -9,6 +9,7 @@ const schema = users.discriminator('staff', new mongoose.Schema({
         type:    Boolean,
         default: false,
     },
+    role: String,
 }));
 
 export const staff = mongoose.model('staff', schema);
