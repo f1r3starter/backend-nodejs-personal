@@ -26,8 +26,6 @@ const schema = new mongoose.Schema(
     { timestamp: { createdAt: 'created', updatedAt: 'modified' } },
 );
 
-schema.index({ hash: 1 }, { name: 'hash' });
-
 export const orders = mongoose.model('orders', schema);
 
 orders.createIndexes();
