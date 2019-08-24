@@ -1,8 +1,16 @@
 // Core
 import mongoose from 'mongoose';
 
-// Document shape
-const schema = new mongoose.Schema({});
+// Base
+import { users } from './base';
 
-// Collection
-export const users = mongoose.model('staff', schema);
+const schema = users.discriminator('staff', new mongoose.Schema({
+    disabled: {
+        type:    Boolean,
+        default: false,
+    },
+}));
+
+export const staff = mongoose.model('staff', schema);
+
+staff.createIndex();
