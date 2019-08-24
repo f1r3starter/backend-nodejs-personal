@@ -47,6 +47,6 @@ const schema = new mongoose.Schema(
 
 schema.index({ hash: 1 }, { name: 'hash' });
 
-export const products = mongoose.model('classes', schema);
+export const products = mongoose.model('products', schema);
 
 products.createIndexes();
