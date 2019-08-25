@@ -4,13 +4,13 @@ import mongoose from 'mongoose';
 // Base
 import { users } from './base';
 
-const schema = users.discriminator('customers', new mongoose.Schema({
+users.discriminator('customers', new mongoose.Schema({
     city:    String,
     country: String,
 }));
 
-schema.index({ city: 'text', country: 'text' });
+// schema.index({ city: 'text', country: 'text' });
 
-export const customers = mongoose.model('customers', schema);
+export const customers = mongoose.model('customers');
 
-customers.createIndex();
+// customers.createIndex();

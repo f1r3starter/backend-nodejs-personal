@@ -2,8 +2,7 @@
 import mongoose from 'mongoose';
 
 // Refs
-import { customers } from './';
-import { products } from './';
+import { customers, products } from './';
 
 const schema = new mongoose.Schema(
     {
@@ -12,11 +11,11 @@ const schema = new mongoose.Schema(
             ref:      customers,
             required: true,
         },
-        pid: {
-            type:     mongoose.SchemaTypes.ObjectId,
-            ref:      products,
-            required: true,
-        },
+        // pid: {
+        //     type:     mongoose.SchemaTypes.ObjectId,
+        //     ref:      products,
+        //     required: true,
+        // },
         count: {
             type:     Number,
             required: true,

@@ -37,7 +37,7 @@ const schema = new mongoose.Schema(
                 message: 'Discount should be in a range between 0 and 50 percents',
             },
         },
-        total:    {
+        total: {
             type:     Number,
             required: true,
         },

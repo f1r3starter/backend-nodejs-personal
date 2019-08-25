@@ -2,28 +2,26 @@
 import bcrypt from 'bcrypt';
 
 // Instruments
-import { staff } from '../odm';
+import { customers } from '../odm';
 import { BaseModel } from './';
 
-export class Staff extends BaseModel {
+export class Customers extends BaseModel {
     constructor(data) {
         super(data);
-        this.model = staff;
+        this.model = customers;
     }
 
     async create() {
-       // this.data = await this._transformCreateStaff(this.data);
-        const staff = await this._transformCreateStaff(this.data);
-        const data = await this.model.create(staff);
+        this.data = await this._transformCreateCustomer(this.data);
 
-        return data;
+        return super.create();
     }
 
-    async _transformCreateStaff(data) {
-        const { name, email, phone, password, role } = data;
+    async _transformCreateCustomer(data) {
+        const { name, email, phone, password, city, country } = data;
         const hashedPassword = await bcrypt.hash(password, 11);
         const [ first, last ] = name.split(' ');
-        const staff = {
+        const customer = {
             name: {
                 first,
                 last,
@@ -31,10 +29,10 @@ export class Staff extends BaseModel {
             emails:   [{ email, primary: true }],
             phones:   [{ phone, primary: true }],
             password: hashedPassword,
-            role,
+            city,
+            country,
         };
 
-        return staff;
+        return customer;
     }
 }
-
