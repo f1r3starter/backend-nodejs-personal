@@ -7,4 +7,11 @@ export class Orders extends BaseModel {
         super(data);
         this.model = orders;
     }
+
+    async create(customerId, productId) {
+        this.data.uid = customerId;
+        this.data.pid = productId;
+
+        return super.create();
+    }
 }

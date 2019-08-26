@@ -12,7 +12,6 @@ export class Staff extends BaseModel {
     }
 
     async create() {
-       // this.data = await this._transformCreateStaff(this.data);
         const staff = await this._transformCreateStaff(this.data);
         const data = await this.model.create(staff);
 
@@ -35,6 +34,10 @@ export class Staff extends BaseModel {
         };
 
         return staff;
+    }
+
+    excludeFields() {
+        return super.excludeFields() + ' -disabled -hash -emails._id -phones._id -hash';
     }
 }
 

@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 // Instruments
 import { customers } from '../odm';
 import { BaseModel } from './';
+import {NotFoundError} from '../helpers/errors';
 
 export class Customers extends BaseModel {
     constructor(data) {
@@ -15,6 +16,20 @@ export class Customers extends BaseModel {
         this.data = await this._transformCreateCustomer(this.data);
 
         return super.create();
+    }
+
+    async getByUid() {
+        const { uid } = this.data;
+
+        const data = await this.model
+            .findOne({ hash: uid })
+            .lean();
+
+        if (!data) {
+            throw new NotFoundError('can not find customer with such uid');
+        }
+
+        return data;
     }
 
     async _transformCreateCustomer(data) {
@@ -34,5 +49,9 @@ export class Customers extends BaseModel {
         };
 
         return customer;
+    }
+
+    excludeFields() {
+        return super.excludeFields() + ' -emails._id -phones._id -hash';
     }
 }

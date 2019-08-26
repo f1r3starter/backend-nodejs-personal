@@ -11,11 +11,11 @@ const schema = new mongoose.Schema(
             ref:      customers,
             required: true,
         },
-        // pid: {
-        //     type:     mongoose.SchemaTypes.ObjectId,
-        //     ref:      products,
-        //     required: true,
-        // },
+        pid: {
+            type:     mongoose.SchemaTypes.ObjectId,
+            ref:      products,
+            required: true,
+        },
         count: {
             type:     Number,
             required: true,

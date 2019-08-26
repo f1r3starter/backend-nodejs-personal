@@ -15,6 +15,7 @@ export class BaseModel {
 
     async getAll() {
         const { page: oPage, size: oSize } = this.data;
+        const excludeFields = this.excludeFields();
 
         const { page, size } = validatePaginationObj({
             page: oPage,
@@ -28,7 +29,7 @@ export class BaseModel {
             .sort('-created')
             .skip(offset)
             .limit(size)
-            .select('-__v -_id -__t')
+            .select(excludeFields)
             .lean();
 
         return {
@@ -43,10 +44,11 @@ export class BaseModel {
 
     async getByHash() {
         const { hash } = this.data;
+        const excludeFields = this.excludeFields();
 
         const data = await this.model
             .findOne({ hash })
-            .select('-__v -_id -__t')
+            .select(excludeFields)
             .lean();
 
         if (!data) {
@@ -58,8 +60,12 @@ export class BaseModel {
 
     async updateByHash() {
         const { hash, payload } = this.data;
+        const excludeFields = this.excludeFields();
 
-        const data = await this.model.findOneAndUpdate({ hash }, payload);
+        const data = await this.model
+            .findOneAndUpdate({ hash }, payload)
+            .select(excludeFields)
+            .lean();
 
         if (!data) {
             throw new NotFoundError(`can not find document with hash ${hash}`);
@@ -78,5 +84,9 @@ export class BaseModel {
         }
 
         return data;
+    }
+
+    excludeFields() {
+        return '-__v -_id -__t -created -modified';
     }
 }

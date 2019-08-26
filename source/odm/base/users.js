@@ -6,6 +6,29 @@ const baseOptions = {
     collection:       'users',
 };
 
+const emailSchema = new mongoose.Schema(
+    {
+        email: {
+            type:     String,
+            unique:   true,
+            required: true,
+        },
+        primary: Boolean,
+    },
+    { _id: false },
+);
+
+const phoneSchema = new mongoose.Schema(
+    {
+        phone: {
+            type:     String,
+            required: true,
+        },
+        primary: Boolean,
+    },
+    { _id: false },
+);
+
 // Document shape
 const schema = new mongoose.Schema(
     {
@@ -25,25 +48,8 @@ const schema = new mongoose.Schema(
                 required: true,
             },
         },
-        emails: [
-            {
-                email: {
-                    type:     String,
-                    unique:   true,
-                    required: true,
-                },
-                primary: Boolean,
-            },
-        ],
-        phones: [
-            {
-                phone: {
-                    type:     String,
-                    required: true,
-                },
-                primary: Boolean,
-            },
-        ],
+        emails:   [ emailSchema ],
+        phones:   [ phoneSchema ],
         password: {
             type:     String,
             select:   false,
@@ -60,6 +66,7 @@ const schema = new mongoose.Schema(
 );
 
 schema.index({ hash: 1 }, { name: 'hash' });
+schema.index({ 'emails.email': 1 }, { unique: true });
 schema.index({ 'name.first': 'text', 'name.last': 'text' });
 
 // Collection
