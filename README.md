@@ -1,7 +1,5 @@
 # Backend Personal
 
-#### Boilerplate repository for Lectrum Backend Personal.
-
 #### Перед запуском проекта:
 1. Создать в корне проекта (на одном уровне с package.json) файл с именем `.env`
 2. Добавить в файл следующий код
